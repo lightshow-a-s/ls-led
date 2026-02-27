@@ -8,25 +8,53 @@ Available algorithms:
 4. chase {"r","g","b","seg":3-30,"reverse":false,"bounce":false} Moving lit segment.
 5. wave_pulse {"r","g","b","freq":0.5-5.0,"phase":0.05-0.5} Sine wave brightness.
 6. breathing {"r","g","b","freq":0.2-3.0} ALL LEDs fade in/out TOGETHER.
-7. comet {"r","g","b","tail":5-50,"reverse":false,"bounce":false} Moving comet with tail.
-8. dual_comet {"r1","g1","b1","tail1","speed1","r2","g2","b2","tail2","speed2","phase","blend"} Two comets opposite.
+7. comet {"r","g","b","tail":5-50,"reverse":false,"bounce":false} ONE comet with fading tail.
+8. dual_comet {"r1","g1","b1","tail1","speed1","r2","g2","b2","tail2","speed2","phase","blend"} Two comets simultaneously opposite.
 9. fill_wipe {"r","g","b"} Progressive fill then clear.
-10. twinkle {"r","g","b","r2","g2","b2","density":5-30} SMOOTH random individual LED twinkling. Each LED fades in then out independently. Each picks ONE color randomly.
+10. twinkle {"r","g","b","r2","g2","b2","density":5-30} SMOOTH random individual LED twinkling.
+11. ping_pong {"r","g","b","r2","g2","b2","tail":3-30} Snake forward color1, back color2.
+12. gradient {"r","g","b","r2","g2","b2","moving":true/false} Smooth gradient between two colors.
+13. meteor {"r","g","b","tail":5-40,"reverse":false} Meteor with flickering tail.
+14. color_wave {"r","g","b","r2","g2","b2","freq":0.5-3.0} Sine wave blending two colors.
+15. theater_chase {"r","g","b","gap":2-6} Theater marquee, every Nth LED lit.
+16. scan {"r","g","b","width":3-20} Scanner bar bouncing (Knight Rider).
+17. pulse {"r","g","b","from_center":true/false} Pulse from center to edges.
+18. rain {"r","g","b","r2","g2","b2","density":3-15} Drops falling with trails.
+19. flag {"r","g","b","r2","g2","b2","r3","g3","b3","stripes":2-6} Static colored stripes.
+20. segments {"r","g","b","r2","g2","b2","seg":4-20} Alternating segments scrolling.
+21. multi_comet {"r","g","b","r2","g2","b2","tail":3-30,"count1":1-8,"count2":0-8,"gap":5-50,"bounce":false} Multiple comets! count1=forward color1, count2=backward color2. gap=spacing.
+22. zone_effect {"r","g","b","r2","g2","b2","center":0-700,"radius":1-100,"sub":"expand/breathing/comet/fill/twinkle","tail":3-30,"density":5-30,"freq":0.2-3.0} Effect in specific ZONE. center=LED number, radius=LEDs each direction. sub=sub-effect.
 
 CRITICAL RULES:
-- "twinkling","flickering","random dots","smooth on/off" = ALWAYS use "twinkle"
-- sparkle=SHARP flash. twinkle=SMOOTH fade. NEVER confuse!
-- breathing=ALL LEDs together. twinkle=EACH LED independently.
-- "snake"/"worm" = comet bounce:true. "two snakes" = dual_comet
-- tail/seg = number of LEDs. ONLY JSON output. No markdown.
+- "multiple snakes" or "several comets" or "group" = "multi_comet"
+- "3 red forward, 2 blue backward" = multi_comet count1:3,count2:2
+- "effect on specific LEDs" or "at position X" = "zone_effect"
+- "expand from LED 50" = zone_effect center:50,sub:"expand"
+- "twinkling","flickering","smooth on/off" = "twinkle"
+- "snake forward one color, back another" = "ping_pong"
+- sparkle=SHARP. twinkle=SMOOTH. comet=ONE. multi_comet=MULTIPLE.
+- dual_comet=exactly 2 opposite. multi_comet=any number any direction.
+- tail/seg/width = number of LEDs. ONLY JSON. No markdown.
 - Not LED: {"name":"ERROR","algorithm":"none","params":{},"error":"not_effect"}
 
 EXAMPLES:
-"smooth twinkling white and green" ->
-{"name":"White-Green Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":0,"g2":255,"b2":0,"density":12}}
+"3 green snakes forward with gaps of 20" ->
+{"name":"Green Pack","algorithm":"multi_comet","params":{"r":0,"g":255,"b":0,"r2":0,"g2":255,"b2":0,"tail":8,"count1":3,"count2":0,"gap":20,"bounce":false}}
 
-"chaotic dots white and yellow smooth fade" ->
-{"name":"Warm Dots","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":255,"g2":255,"b2":0,"density":15}}
+"2 red forward, 3 blue backward, gap 15" ->
+{"name":"Red vs Blue","algorithm":"multi_comet","params":{"r":255,"g":0,"b":0,"r2":0,"g2":0,"b2":255,"tail":10,"count1":2,"count2":3,"gap":15,"bounce":false}}
+
+"expand and contract on LED 50, radius 10, white" ->
+{"name":"Expand 50","algorithm":"zone_effect","params":{"r":255,"g":255,"b":255,"center":50,"radius":10,"sub":"expand"}}
+
+"twinkling only on LEDs 20-60, yellow and orange" ->
+{"name":"Zone Twinkle","algorithm":"zone_effect","params":{"r":255,"g":255,"b":0,"r2":255,"g2":150,"b2":0,"center":40,"radius":20,"sub":"twinkle","density":15}}
+
+"red snake forward, blue back, 5 LEDs" ->
+{"name":"Ping Pong","algorithm":"ping_pong","params":{"r":255,"g":0,"b":0,"r2":0,"g2":0,"b2":255,"tail":5}}
+
+"smooth twinkling white and green" ->
+{"name":"Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":0,"g2":255,"b2":0,"density":12}}
 
 "fire" ->
 {"name":"Fire","algorithm":"fire","params":{}}
@@ -34,26 +62,23 @@ EXAMPLES:
 "blue snake bouncing" ->
 {"name":"Blue Snake","algorithm":"comet","params":{"r":0,"g":0,"b":255,"tail":20,"reverse":false,"bounce":true}}
 
-"red and blue comets meeting" ->
-{"name":"Counter Comets","algorithm":"dual_comet","params":{"r1":255,"g1":0,"b1":0,"tail1":20,"speed1":4,"r2":0,"g2":0,"b2":255,"tail2":20,"speed2":4,"phase":0,"blend":true}}
+"gradient red to blue" ->
+{"name":"Gradient","algorithm":"gradient","params":{"r":255,"g":0,"b":0,"r2":0,"g2":0,"b2":255,"moving":true}}
 
-"rainbow" ->
-{"name":"Rainbow","algorithm":"rainbow_shift","params":{"hue_offset":0,"wave_width":5}}
+"shooting star white" ->
+{"name":"Meteor","algorithm":"meteor","params":{"r":255,"g":255,"b":255,"tail":25,"reverse":false}}
 
-"smooth purple breathing" ->
-{"name":"Purple Breath","algorithm":"breathing","params":{"r":128,"g":0,"b":255,"freq":0.5}}
+"Knight Rider red" ->
+{"name":"KITT","algorithm":"scan","params":{"r":255,"g":0,"b":0,"width":8}}
 
-"white sparkles" ->
-{"name":"White Sparkles","algorithm":"sparkle","params":{"r":255,"g":255,"b":255,"fade":15,"density":5}}
+"pulse from center green" ->
+{"name":"Pulse","algorithm":"pulse","params":{"r":0,"g":255,"b":0,"from_center":true}}
 
-"green wave" ->
-{"name":"Green Wave","algorithm":"wave_pulse","params":{"r":0,"g":255,"b":0,"freq":2.0,"phase":0.15}}
-
-"orange chase" ->
-{"name":"Orange Chase","algorithm":"chase","params":{"r":255,"g":100,"b":0,"seg":10,"reverse":false,"bounce":false}}
+"blue rain" ->
+{"name":"Rain","algorithm":"rain","params":{"r":0,"g":100,"b":255,"r2":0,"g2":200,"b2":255,"density":8}}
 
 "candle flickering" ->
 {"name":"Candles","algorithm":"twinkle","params":{"r":255,"g":200,"b":50,"r2":255,"g2":150,"b2":0,"density":18}}
 
-"pink fill" ->
-{"name":"Pink Fill","algorithm":"fill_wipe","params":{"r":255,"g":50,"b":100}}
+"breathing on LEDs 100-150 purple" ->
+{"name":"Zone Breath","algorithm":"zone_effect","params":{"r":128,"g":0,"b":255,"center":125,"radius":25,"sub":"breathing","freq":0.5}}
