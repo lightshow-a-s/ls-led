@@ -11,20 +11,21 @@ Available algorithms:
 7. comet {"r","g","b","tail":5-50,"reverse":false,"bounce":false,"solid":false} ONE comet with fading tail. solid=true: all LEDs same brightness.
 8. dual_comet {"r1","g1","b1","tail1","speed1","r2","g2","b2","tail2","speed2","phase","blend"} Two comets opposite.
 9. fill_wipe {"r","g","b"} Progressive fill then clear.
-10. twinkle {"r","g","b","r2","g2","b2","r3","g3","b3","r4","g4","b4","colors":1-4,"density":5-30,"fill":5-100,"mode":0-3,"bg":0-255,"bgr","bgg","bgb"} Random individual LED twinkling with up to 4 colors. colors=number of twinkle colors(1-4). r,g,b=color1. r2,g2,b2=color2. r3,g3,b3=color3. r4,g4,b4=color4. bg=background brightness(0=off). bgr,bgg,bgb=background color. mode: 0=smooth on+off, 1=instant on+smooth off, 2=instant on+off, 3=smooth on+instant off.
-11. ping_pong {"r","g","b","r2","g2","b2","tail":3-30} Snake forward color1, back color2.
-12. gradient {"r","g","b","r2","g2","b2","moving":true/false} Smooth gradient between two colors.
-13. meteor {"r","g","b","tail":5-40,"reverse":false} Meteor with flickering tail.
-14. color_wave {"r","g","b","r2","g2","b2","freq":0.5-3.0} Sine wave blending two colors.
-15. theater_chase {"r","g","b","gap":2-6} Theater marquee, every Nth LED lit.
-16. scan {"r","g","b","width":3-20} Scanner bar bouncing (Knight Rider).
-17. pulse {"r","g","b","from_center":true/false} Pulse from center to edges.
-18. rain {"r","g","b","r2","g2","b2","density":3-15} Drops falling with trails.
-19. flag {"r","g","b","r2","g2","b2","r3","g3","b3","stripes":2-6} Static colored stripes.
-20. segments {"r","g","b","r2","g2","b2","seg":4-20} Alternating segments scrolling.
-21. multi_comet {"r","g","b","r2","g2","b2","tail":3-30,"count1":1-8,"count2":0-8,"gap":5-50,"bounce":false} Multiple comets! count1=forward color1, count2=backward color2. gap=spacing.
-22. zone_effect {"r","g","b","r2","g2","b2","center":0-700,"radius":1-100,"sub":"expand/breathing/comet/fill/twinkle","tail":3-30,"density":5-30,"freq":0.2-3.0} Effect in specific ZONE.
-23. combo {"base":"twinkle/breathing/rainbow_shift","top":"comet/scan/meteor/chase"} TWO effects layered! Base params: r,g,b=base color1, br2,bg2,bb2=base color2, bdensity, bfill, bmode, bcolors(for twinkle). Top params: tr,tg,tb=top color, ttail, treverse, tbounce, tsolid(for comet), twidth(for scan), tseg(for chase), tspeed:1-10(top layer speed, default 3). Slider controls base speed, tspeed controls top independently.
+10. strobe {"r","g","b","hz":1-30,"duty":5-95} Strobe/flash. hz=frequency in Hz. duty=on-time percentage(33=1/3 on, 50=half on).
+11. twinkle {"r","g","b","r2","g2","b2","r3","g3","b3","r4","g4","b4","colors":1-4,"density":5-30,"fill":5-100,"mode":0-3,"bg":0-255,"bgr","bgg","bgb"} Random individual LED twinkling with up to 4 colors. colors=number of twinkle colors(1-4). r,g,b=color1. r2,g2,b2=color2. r3,g3,b3=color3. r4,g4,b4=color4. bg=background brightness(0=off). bgr,bgg,bgb=background color. mode: 0=smooth on+off, 1=instant on+smooth off, 2=instant on+off, 3=smooth on+instant off.
+12. ping_pong {"r","g","b","r2","g2","b2","tail":3-30} Snake forward color1, back color2.
+13. gradient {"r","g","b","r2","g2","b2","moving":true/false} Smooth gradient between two colors.
+14. meteor {"r","g","b","tail":5-40,"reverse":false} Meteor with flickering tail.
+15. color_wave {"r","g","b","r2","g2","b2","freq":0.5-3.0} Sine wave blending two colors.
+16. theater_chase {"r","g","b","gap":2-6} Theater marquee, every Nth LED lit.
+17. scan {"r","g","b","width":3-20} Scanner bar bouncing (Knight Rider).
+18. pulse {"r","g","b","from_center":true/false} Pulse from center to edges.
+19. rain {"r","g","b","r2","g2","b2","density":3-15} Drops falling with trails.
+20. flag {"r","g","b","r2","g2","b2","r3","g3","b3","stripes":2-6} Static colored stripes.
+21. segments {"r","g","b","r2","g2","b2","seg":4-20} Alternating segments scrolling.
+22. multi_comet {"r","g","b","r2","g2","b2","tail":3-30,"count1":1-8,"count2":0-8,"gap":5-50,"bounce":false} Multiple comets! count1=forward color1, count2=backward color2. gap=spacing.
+23. zone_effect {"r","g","b","r2","g2","b2","center":0-700,"radius":1-100,"sub":"expand/breathing/comet/fill/twinkle","tail":3-30,"density":5-30,"freq":0.2-3.0} Effect in specific ZONE.
+24. combo {"base":"twinkle/breathing/rainbow_shift","top":"comet/scan/meteor/chase"} TWO effects layered! Base params: r,g,b=base color1, br2,bg2,bb2=base color2, bdensity, bfill, bmode, bcolors(for twinkle). Top params: tr,tg,tb=top color, ttail, treverse, tbounce, tsolid(for comet), twidth(for scan), tseg(for chase), tspeed:1-10(top layer speed, default 3). Slider controls base speed, tspeed controls top independently.
 
 GLOBAL PARAMS (work with ANY algorithm):
 - "bg":0-255 background brightness. "bgr","bgg","bgb" background color. When bg>0, dark pixels show background color.
@@ -78,6 +79,9 @@ EXAMPLES:
 
 "red scanner over rainbow" ->
 {"name":"Scan+Rainbow","algorithm":"combo","params":{"base":"rainbow_shift","wave_width":5,"top":"scan","tr":255,"tg":0,"tb":0,"twidth":10}}
+
+"white strobe 15Hz duty 1/3" ->
+{"name":"Strobe 15Hz","algorithm":"strobe","params":{"r":255,"g":255,"b":255,"hz":15,"duty":33}}
 
 "fire" ->
 {"name":"Fire","algorithm":"fire","params":{}}
