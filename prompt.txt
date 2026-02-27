@@ -24,7 +24,7 @@ Available algorithms:
 20. segments {"r","g","b","r2","g2","b2","seg":4-20} Alternating segments scrolling.
 21. multi_comet {"r","g","b","r2","g2","b2","tail":3-30,"count1":1-8,"count2":0-8,"gap":5-50,"bounce":false} Multiple comets! count1=forward color1, count2=backward color2. gap=spacing.
 22. zone_effect {"r","g","b","r2","g2","b2","center":0-700,"radius":1-100,"sub":"expand/breathing/comet/fill/twinkle","tail":3-30,"density":5-30,"freq":0.2-3.0} Effect in specific ZONE.
-23. combo {"base":"twinkle/breathing/rainbow_shift","top":"comet/scan/meteor/chase"} TWO effects layered! Base params: r,g,b=base color1, br2,bg2,bb2=base color2, bdensity, bfill, bmode, bcolors(for twinkle). Top params: tr,tg,tb=top color, ttail, treverse, tbounce, tsolid(for comet), twidth(for scan), tseg(for chase).
+23. combo {"base":"twinkle/breathing/rainbow_shift","top":"comet/scan/meteor/chase"} TWO effects layered! Base params: r,g,b=base color1, br2,bg2,bb2=base color2, bdensity, bfill, bmode, bcolors(for twinkle). Top params: tr,tg,tb=top color, ttail, treverse, tbounce, tsolid(for comet), twidth(for scan), tseg(for chase), tspeed:1-10(top layer speed, default 3). Slider controls base speed, tspeed controls top independently.
 
 GLOBAL PARAMS (work with ANY algorithm):
 - "bg":0-255 background brightness. "bgr","bgg","bgb" background color. When bg>0, dark pixels show background color.
