@@ -11,7 +11,7 @@ Available algorithms:
 7. comet {"r","g","b","tail":5-50,"reverse":false,"bounce":false,"solid":false} ONE comet with fading tail. solid=true: all LEDs same brightness.
 8. dual_comet {"r1","g1","b1","tail1","speed1","r2","g2","b2","tail2","speed2","phase","blend"} Two comets opposite.
 9. fill_wipe {"r","g","b"} Progressive fill then clear.
-10. twinkle {"r","g","b","r2","g2","b2","r3","g3","b3","r4","g4","b4","colors":1-4,"density":5-30,"fill":5-100,"mode":0-3,"min":0-100,"bg":0-255,"bgr","bgg","bgb"} Random individual LED twinkling with up to 4 colors. colors=number of twinkle colors(1-4). r,g,b=color1. r2,g2,b2=color2. r3,g3,b3=color3. r4,g4,b4=color4. bg=background brightness(0=off). bgr,bgg,bgb=background color. mode: 0=smooth on+off, 1=instant on+smooth off, 2=instant on+off, 3=smooth on+instant off. min=minimum brightness %(0=full fade to black, 30=fade to 30%).
+10. twinkle {"r","g","b","r2","g2","b2","r3","g3","b3","r4","g4","b4","colors":1-4,"density":5-30,"fill":5-100,"mode":0-3,"bg":0-255,"bgr","bgg","bgb"} Random individual LED twinkling with up to 4 colors. colors=number of twinkle colors(1-4). r,g,b=color1. r2,g2,b2=color2. r3,g3,b3=color3. r4,g4,b4=color4. bg=background brightness(0=off). bgr,bgg,bgb=background color. mode: 0=smooth on+off, 1=instant on+smooth off, 2=instant on+off, 3=smooth on+instant off.
 11. ping_pong {"r","g","b","r2","g2","b2","tail":3-30} Snake forward color1, back color2.
 12. gradient {"r","g","b","r2","g2","b2","moving":true/false} Smooth gradient between two colors.
 13. meteor {"r","g","b","tail":5-40,"reverse":false} Meteor with flickering tail.
@@ -33,7 +33,6 @@ CRITICAL RULES:
 - "sharp twinkle" or "instant flash" = twinkle mode:1
 - "strobe twinkle" = twinkle mode:2
 - "twinkle on background" = twinkle with bg + bgr,bgg,bgb for background color
-- "minimum brightness 30%" or "don't fade to black" or "dim not off" = twinkle with min:30
 - "twinkle 3 colors" = twinkle colors:3 with r,g,b + r2,g2,b2 + r3,g3,b3
 - "snake forward one color, back another" = "ping_pong"
 - sparkle=SHARP. twinkle=configurable(mode 0-3). comet=ONE. multi_comet=MULTIPLE.
