@@ -24,6 +24,11 @@ Available algorithms:
 20. segments {"r","g","b","r2","g2","b2","seg":4-20} Alternating segments scrolling.
 21. multi_comet {"r","g","b","r2","g2","b2","tail":3-30,"count1":1-8,"count2":0-8,"gap":5-50,"bounce":false} Multiple comets! count1=forward color1, count2=backward color2. gap=spacing.
 22. zone_effect {"r","g","b","r2","g2","b2","center":0-700,"radius":1-100,"sub":"expand/breathing/comet/fill/twinkle","tail":3-30,"density":5-30,"freq":0.2-3.0} Effect in specific ZONE.
+23. combo {"base":"twinkle/breathing/rainbow_shift","top":"comet/scan/meteor/chase"} TWO effects layered! Base params: r,g,b=base color1, br2,bg2,bb2=base color2, bdensity, bfill, bmode, bcolors(for twinkle). Top params: tr,tg,tb=top color, ttail, treverse, tbounce, tsolid(for comet), twidth(for scan), tseg(for chase).
+
+GLOBAL PARAMS (work with ANY algorithm):
+- "bg":0-255 background brightness. "bgr","bgg","bgb" background color. When bg>0, dark pixels show background color.
+- Example: comet on blue background: add "bg":60,"bgr":0,"bgg":0,"bgb":255 to params.
 
 CRITICAL RULES:
 - "multiple snakes" or "several comets" or "group" = "multi_comet"
@@ -32,7 +37,9 @@ CRITICAL RULES:
 - "twinkling","flickering","smooth on/off" = "twinkle" mode:0
 - "sharp twinkle" or "instant flash" = twinkle mode:1
 - "strobe twinkle" = twinkle mode:2
-- "twinkle on background" = twinkle with bg + bgr,bgg,bgb for background color
+- "on X background" or "with X base" = add bg:30-100 + bgr,bgg,bgb to ANY algorithm
+- "comet on twinkle" or "snake over twinkling" or "effect on effect" = "combo" base:"twinkle",top:"comet"
+- "scanner over breathing" = "combo" base:"breathing",top:"scan"
 - "twinkle 3 colors" = twinkle colors:3 with r,g,b + r2,g2,b2 + r3,g3,b3
 - "snake forward one color, back another" = "ping_pong"
 - sparkle=SHARP. twinkle=configurable(mode 0-3). comet=ONE. multi_comet=MULTIPLE.
@@ -65,6 +72,12 @@ EXAMPLES:
 
 "red snake forward, blue back, 5 LEDs" ->
 {"name":"Ping Pong","algorithm":"ping_pong","params":{"r":255,"g":0,"b":0,"r2":0,"g2":0,"b2":255,"tail":5}}
+
+"white comet over warm twinkling" ->
+{"name":"Comet+Twinkle","algorithm":"combo","params":{"base":"twinkle","r":255,"g":200,"b":50,"br2":255,"bg2":150,"bb2":0,"bdensity":15,"bfill":50,"bmode":0,"bcolors":2,"top":"comet","tr":255,"tg":255,"tb":255,"ttail":15,"tbounce":true}}
+
+"red scanner over rainbow" ->
+{"name":"Scan+Rainbow","algorithm":"combo","params":{"base":"rainbow_shift","wave_width":5,"top":"scan","tr":255,"tg":0,"tb":0,"twidth":10}}
 
 "fire" ->
 {"name":"Fire","algorithm":"fire","params":{}}
