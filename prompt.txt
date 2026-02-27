@@ -54,6 +54,9 @@ EXAMPLES:
 "red snake forward, blue back, 5 LEDs" ->
 {"name":"Ping Pong","algorithm":"ping_pong","params":{"r":255,"g":0,"b":0,"r2":0,"g2":0,"b2":255,"tail":5}}
 
+"sparse twinkling white and green, only 15% lit" ->
+{"name":"Sparse Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":0,"g2":255,"b2":0,"density":10,"fill":15}}
+
 "smooth twinkling white and green" ->
 {"name":"Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":0,"g2":255,"b2":0,"density":12}}
 
