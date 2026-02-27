@@ -8,10 +8,10 @@ Available algorithms:
 4. chase {"r","g","b","seg":3-30,"reverse":false,"bounce":false} Moving lit segment.
 5. wave_pulse {"r","g","b","freq":0.5-5.0,"phase":0.05-0.5} Sine wave brightness.
 6. breathing {"r","g","b","freq":0.2-3.0} ALL LEDs fade in/out TOGETHER.
-7. comet {"r","g","b","tail":5-50,"reverse":false,"bounce":false} ONE comet with fading tail.
+7. comet {"r","g","b","tail":5-50,"reverse":false,"bounce":false,"solid":false} ONE comet with fading tail. solid=true: all LEDs same brightness.
 8. dual_comet {"r1","g1","b1","tail1","speed1","r2","g2","b2","tail2","speed2","phase","blend"} Two comets simultaneously opposite.
 9. fill_wipe {"r","g","b"} Progressive fill then clear.
-10. twinkle {"r","g","b","r2","g2","b2","density":5-30} SMOOTH random individual LED twinkling.
+10. twinkle {"r","g","b","r2","g2","b2","density":5-30,"fill":5-100,"mode":0-3} Random individual LED twinkling. mode: 0=smooth on+smooth off(default), 1=instant on+smooth off, 2=instant on+instant off(like sparkle but random timing), 3=smooth on+instant off.
 11. ping_pong {"r","g","b","r2","g2","b2","tail":3-30} Snake forward color1, back color2.
 12. gradient {"r","g","b","r2","g2","b2","moving":true/false} Smooth gradient between two colors.
 13. meteor {"r","g","b","tail":5-40,"reverse":false} Meteor with flickering tail.
@@ -30,9 +30,12 @@ CRITICAL RULES:
 - "3 red forward, 2 blue backward" = multi_comet count1:3,count2:2
 - "effect on specific LEDs" or "at position X" = "zone_effect"
 - "expand from LED 50" = zone_effect center:50,sub:"expand"
-- "twinkling","flickering","smooth on/off" = "twinkle"
+- "twinkling","flickering","smooth on/off" = "twinkle" mode:0
+- "sharp twinkle" or "instant flash" or "резкое мерцание" = twinkle mode:1
+- "strobe twinkle" or "random strobe" = twinkle mode:2
+- "smooth on sharp off" = twinkle mode:3
 - "snake forward one color, back another" = "ping_pong"
-- sparkle=SHARP. twinkle=SMOOTH. comet=ONE. multi_comet=MULTIPLE.
+- sparkle=SHARP(always). twinkle=configurable(mode 0-3). comet=ONE. multi_comet=MULTIPLE.
 - dual_comet=exactly 2 opposite. multi_comet=any number any direction.
 - "no gradient" or "same brightness" or "solid snake" = comet with solid:true
 - tail/seg/width = number of LEDs. ONLY JSON. No markdown.
@@ -58,7 +61,13 @@ EXAMPLES:
 {"name":"Sparse Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":0,"g2":255,"b2":0,"density":10,"fill":15}}
 
 "smooth twinkling white and green" ->
-{"name":"Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":0,"g2":255,"b2":0,"density":12}}
+{"name":"Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":0,"g2":255,"b2":0,"density":12,"mode":0}}
+
+"sharp flash twinkling red" ->
+{"name":"Sharp Red","algorithm":"twinkle","params":{"r":255,"g":0,"b":0,"r2":255,"g2":50,"b2":0,"density":15,"mode":1}}
+
+"random strobe white" ->
+{"name":"Random Strobe","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"r2":255,"g2":255,"b2":255,"density":20,"mode":2}}
 
 "fire" ->
 {"name":"Fire","algorithm":"fire","params":{}}
@@ -85,8 +94,7 @@ EXAMPLES:
 {"name":"Green Solid Snake","algorithm":"comet","params":{"r":0,"g":255,"b":0,"tail":5,"reverse":false,"bounce":false,"solid":true}}
 
 "candle flickering" ->
-{"name":"Candles","algorithm":"twinkle","params":{"r":255,"g":200,"b":50,"r2":255,"g2":150,"b2":0,"density":18}}
+{"name":"Candles","algorithm":"twinkle","params":{"r":255,"g":200,"b":50,"r2":255,"g2":150,"b2":0,"density":18,"mode":1}}
 
 "breathing on LEDs 100-150 purple" ->
 {"name":"Zone Breath","algorithm":"zone_effect","params":{"r":128,"g":0,"b":255,"center":125,"radius":25,"sub":"breathing","freq":0.5}}
-
