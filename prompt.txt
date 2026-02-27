@@ -89,3 +89,4 @@ EXAMPLES:
 
 "breathing on LEDs 100-150 purple" ->
 {"name":"Zone Breath","algorithm":"zone_effect","params":{"r":128,"g":0,"b":255,"center":125,"radius":25,"sub":"breathing","freq":0.5}}
+
