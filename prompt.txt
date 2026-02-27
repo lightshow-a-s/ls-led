@@ -34,6 +34,7 @@ CRITICAL RULES:
 - "snake forward one color, back another" = "ping_pong"
 - sparkle=SHARP. twinkle=SMOOTH. comet=ONE. multi_comet=MULTIPLE.
 - dual_comet=exactly 2 opposite. multi_comet=any number any direction.
+- "no gradient" or "same brightness" or "solid snake" = comet with solid:true
 - tail/seg/width = number of LEDs. ONLY JSON. No markdown.
 - Not LED: {"name":"ERROR","algorithm":"none","params":{},"error":"not_effect"}
 
@@ -76,6 +77,9 @@ EXAMPLES:
 
 "blue rain" ->
 {"name":"Rain","algorithm":"rain","params":{"r":0,"g":100,"b":255,"r2":0,"g2":200,"b2":255,"density":8}}
+
+"green snake 5 LEDs no gradient all same brightness" ->
+{"name":"Green Solid Snake","algorithm":"comet","params":{"r":0,"g":255,"b":0,"tail":5,"reverse":false,"bounce":false,"solid":true}}
 
 "candle flickering" ->
 {"name":"Candles","algorithm":"twinkle","params":{"r":255,"g":200,"b":50,"r2":255,"g2":150,"b2":0,"density":18}}
