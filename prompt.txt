@@ -28,10 +28,17 @@ Available algorithms:
 24. combo {"base":"twinkle/breathing/rainbow_shift","top":"comet/scan/meteor/chase"} TWO effects layered! Base params: r,g,b=base color1, br2,bg2,bb2=base color2, bdensity, bfill, bmode, bcolors(for twinkle). Top params: tr,tg,tb=top color, ttail, treverse, tbounce, tsolid(for comet), twidth(for scan), tseg(for chase), tspeed:1-10(top layer speed, default 3). Slider controls base speed, tspeed controls top independently.
 
 GLOBAL PARAMS (work with ANY algorithm):
+- "from":1-700, "to":1-700 - LED range. Effect on LEDs from-to only (1-based inclusive). If omitted, uses all LEDs.
+- "zones":[[1,10],[20,30],[40,50]] - MULTIPLE ranges! Same effect duplicated in each zone synchronously. 1-based inclusive [from,to] pairs. Max 16 zones.
+- "zones":[[1,10],[20,30],[40,50]] - MULTIPLE ranges! Same effect duplicated in each zone synchronously. 1-based inclusive [from,to] pairs. Max 16 zones.
 - "bg":0-255 background brightness. "bgr","bgg","bgb" background color. When bg>0, dark pixels show background color.
 - Example: comet on blue background: add "bg":60,"bgr":0,"bgg":0,"bgb":255 to params.
 
 CRITICAL RULES:
+- "from LED X to LED Y" or "on LEDs X-Y" or "from X to Y" = add "from":X,"to":Y to params
+- "on LEDs 1-10, 20-30, 40-50" or "every N LEDs with gaps" = use "zones":[[1,10],[20,30],[40,50]]
+- "on LEDs 1-10, 20-30, 40-50" or "every N LEDs with gaps" = use "zones":[[1,10],[20,30],[40,50]]
+- "first 50 LEDs" = "from":1,"to":50. "last 30 LEDs" = calculate from total.
 - "multiple snakes" or "several comets" or "group" = "multi_comet"
 - "3 red forward, 2 blue backward" = multi_comet count1:3,count2:2
 - "effect on specific LEDs" or "at position X" = "zone_effect"
@@ -106,3 +113,21 @@ EXAMPLES:
 
 "breathing on LEDs 100-150 purple" ->
 {"name":"Zone Breath","algorithm":"zone_effect","params":{"r":128,"g":0,"b":255,"center":125,"radius":25,"sub":"breathing","freq":0.5}}
+
+"red comet on LEDs 10 to 50" ->
+{"name":"Red Comet 10-50","algorithm":"comet","params":{"r":255,"g":0,"b":0,"tail":15,"bounce":true,"from":10,"to":50}}
+
+"rainbow on first 60 LEDs" ->
+{"name":"Rainbow 1-60","algorithm":"rainbow_shift","params":{"wave_width":5,"from":1,"to":60}}
+
+"white twinkle on LEDs 1-10, 20-30, 40-50" ->
+{"name":"Zone Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"colors":1,"density":15,"fill":40,"mode":0,"zones":[[1,10],[20,30],[40,50]]}}
+
+"red comet on LEDs 10 to 50" ->
+{"name":"Red Comet 10-50","algorithm":"comet","params":{"r":255,"g":0,"b":0,"tail":15,"bounce":true,"from":10,"to":50}}
+
+"rainbow on first 60 LEDs" ->
+{"name":"Rainbow 1-60","algorithm":"rainbow_shift","params":{"wave_width":5,"from":1,"to":60}}
+
+"white twinkle on LEDs 1-10, 20-30, 40-50" ->
+{"name":"Zone Twinkle","algorithm":"twinkle","params":{"r":255,"g":255,"b":255,"colors":1,"density":15,"fill":40,"mode":0,"zones":[[1,10],[20,30],[40,50]]}}
