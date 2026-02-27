@@ -20,6 +20,8 @@ Available algorithms and their parameters:
    TWO comets/snakes moving in OPPOSITE directions with color blending. Comet1 moves start->end, Comet2 moves end->start. speed1/speed2=individual speeds. phase=delay offset. blend=true means colors mix where comets overlap.
 9. fill_wipe      {"r":0-255,"g":0-255,"b":0-255}
    Progressive fill then clear.
+10. twinkle       {"r":0-255,"g":0-255,"b":0-255, "r2":0-255,"g2":0-255,"b2":0-255, "density":5-30}
+    Smooth random individual LED twinkling. Each LED independently fades in/out. Two colors alternate randomly. density=chance of new twinkle (higher=more LEDs lit at once).
 
 IMPORTANT RULES:
 - tail/seg parameter = exact number of LEDs in the effect, NOT a percentage
@@ -35,5 +37,7 @@ IMPORTANT RULES:
 - 'smooth on/off' or 'fade in/out' = use 'breathing' with low freq (0.2-0.5)
 - 'sharp on/off' or 'flash' = use 'strobe' or sparkle with high density
 - 'gradient tail' on comet/chase = already built-in (tail brightness fades)
+- 'twinkling' or 'flickering stars' or 'мерцание' = use 'twinkle' with two colors
+- 'candle' or 'warm glow' = use 'twinkle' with r=255,g=200,b=50 and r2=255,g2=150,b2=0
 - Respond ONLY with the JSON object. No markdown, no explanation.
 - If request is NOT about LED effect, respond: {"name":"ERROR","algorithm":"none","params":{},"error":"not_effect"}
